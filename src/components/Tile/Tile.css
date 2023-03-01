@@ -1,0 +1,13 @@
+.Image {
+  width: 200px;
+  height: 200px;
+  border-radius: 20px;
+  object-fit: "cover";
+}
+
+.Tile {
+  height: 200px;
+  width: 200px;
+  border-radius: 20px;
+  background-color: rgb(3, 145, 201);
+}
