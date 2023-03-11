@@ -11,9 +11,8 @@ function TilesContainer(props) {
     "https://images.pexels.com/photos/2129796/pexels-photo-2129796.png?auto=compress&cs=tinysrgb&w=1600",
     "https://images.pexels.com/photos/147411/italy-mountains-dawn-daybreak-147411.jpeg?auto=compress&cs=tinysrgb&w=1600",
   ];
-
+  const [clickedImagePath, setImagePath] = useState(null);
   const listOfAllPairedTiles = [...listOfAllTiles, ...listOfAllTiles];
-
   const listToDisplay = listOfAllPairedTiles.sort(
     (a, b) => 0.5 - Math.random()
   );
@@ -22,7 +21,7 @@ function TilesContainer(props) {
   return (
     <div className="TileContainer">
       {listToDisplay.map((element) => (
-        <Tile pictureTile={element} />
+        <Tile pictureTile={element} setImagePath={setImagePath} />
       ))}
     </div>
   );
