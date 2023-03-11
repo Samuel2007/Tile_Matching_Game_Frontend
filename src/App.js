@@ -1,10 +1,10 @@
 import "./App.css";
-import Tile from "./components/Tile/Tile";
+import TilesContainer from "./components/TilesContainer/TileContainer";
 
 function App() {
   return (
     <div className="App">
-      <Tile></Tile>
+      <TilesContainer />
     </div>
   );
 }
