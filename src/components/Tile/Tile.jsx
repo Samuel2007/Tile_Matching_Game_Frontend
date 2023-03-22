@@ -11,7 +11,7 @@ function Tile({
   clickedImagePaths,
 }) {
   const onClickHandler = () => {
-    if (clickedImagePaths.length < 2) {
+    if (clickedImagePaths.length < 2 && !cardState[index].isVisible) {
       const newCardState = cardState.map((card) => {
         if (index === card.ID) {
           return { ...card, isVisible: true };
@@ -22,7 +22,6 @@ function Tile({
       setImagePath([...clickedImagePaths, pictureTile]);
     }
   };
-
   return (
     <div className="Tile" onClick={onClickHandler}>
       {isVisible && <img src={pictureTile} className="Image" />}

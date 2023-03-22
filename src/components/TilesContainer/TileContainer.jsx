@@ -20,7 +20,6 @@ const cards = listToDisplay.map((element, index) => {
 function TilesContainer() {
   const [clickedImagePaths, setImagePaths] = useState([]); // ['url1', 'url2'] => url1 !== url2 => setCardsState
   const [cardState, setCardsState] = useState(cards);
-  console.log(clickedImagePaths);
 
   useEffect(() => {
     if (clickedImagePaths.length === 2) {
@@ -37,7 +36,7 @@ function TilesContainer() {
           setCardsState(newCardState);
           setImagePaths([]);
         }
-      }, 1000);
+      }, 100);
     }
     // clickedImagePaths.length === 2 -> akcja sprawdzająca czy clickedImagePaths[0] === clickedImagePaths[1] =>
   }, [clickedImagePaths]);
