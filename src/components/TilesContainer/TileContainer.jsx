@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { TIME_TO_GAME_START } from "../../App";
 import Tile from "../Tile/Tile";
 import "./TileContainer.css";
 
@@ -17,7 +18,7 @@ const cards = listToDisplay.map((element, index) => {
   return { path: element, isVisible: false, ID: index }; // [{isVisible: false}, {isVisible: false}]
 });
 
-function TilesContainer() {
+function TilesContainer({ isGameStarted }) {
   const [clickedImagePaths, setImagePaths] = useState([]); // ['url1', 'url2'] => url1 !== url2 => setCardsState
   const [cardState, setCardsState] = useState(cards);
 
@@ -36,10 +37,25 @@ function TilesContainer() {
           setCardsState(newCardState);
           setImagePaths([]);
         }
-      }, 100);
+      }, 200);
     }
     // clickedImagePaths.length === 2 -> akcja sprawdzająca czy clickedImagePaths[0] === clickedImagePaths[1] =>
   }, [clickedImagePaths]);
+
+  useEffect(() => {
+    if (isGameStarted) {
+      const newCardState = cardState.map((card) => {
+        return { ...card, isVisible: true };
+      });
+      setCardsState(newCardState);
+      setTimeout(() => {
+        const cardStateAfterTimeout = cardState.map((card) => {
+          return { ...card, isVisible: false };
+        });
+        setCardsState(cardStateAfterTimeout);
+      }, TIME_TO_GAME_START);
+    }
+  }, [isGameStarted]);
 
   return (
     <div className="TileContainer">
@@ -48,6 +64,7 @@ function TilesContainer() {
           element // {path: 'url', isVisible: false}
         ) => (
           <Tile
+            isGameStarted={isGameStarted}
             clickedImagePaths={clickedImagePaths}
             cardState={cardState}
             pictureTile={element.path}

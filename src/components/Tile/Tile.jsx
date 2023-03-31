@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Tile.css";
 
 function Tile({
@@ -9,9 +9,23 @@ function Tile({
   cardState,
   index,
   clickedImagePaths,
+  isGameStarted,
 }) {
+  const [isCardClickable, setIsCardClickable] = useState(false);
+
+  useEffect(() => {
+    if (isGameStarted) {
+      setTimeout(() => {
+        setIsCardClickable(true);
+      }, 7000);
+    }
+  }, [isGameStarted]);
   const onClickHandler = () => {
-    if (clickedImagePaths.length < 2 && !cardState[index].isVisible) {
+    if (
+      isCardClickable &&
+      clickedImagePaths.length < 2 &&
+      !cardState[index].isVisible
+    ) {
       const newCardState = cardState.map((card) => {
         if (index === card.ID) {
           return { ...card, isVisible: true };
