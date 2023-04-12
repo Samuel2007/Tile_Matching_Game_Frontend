@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { TIME_TO_GAME_START } from "../../App";
 import "./Tile.css";
 
 function Tile({
@@ -17,7 +18,7 @@ function Tile({
     if (isGameStarted) {
       setTimeout(() => {
         setIsCardClickable(true);
-      }, 7000);
+      }, TIME_TO_GAME_START + 4000);
     }
   }, [isGameStarted]);
   const onClickHandler = () => {

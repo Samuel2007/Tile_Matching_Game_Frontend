@@ -18,9 +18,12 @@ const cards = listToDisplay.map((element, index) => {
   return { path: element, isVisible: false, ID: index }; // [{isVisible: false}, {isVisible: false}]
 });
 
-function TilesContainer({ isGameStarted }) {
+function TilesContainer({ isGameStarted, areTilesShowing, setIsRunning }) {
   const [clickedImagePaths, setImagePaths] = useState([]); // ['url1', 'url2'] => url1 !== url2 => setCardsState
   const [cardState, setCardsState] = useState(cards);
+
+  cardState.map((card) => ({ ...card, isVisible: false }));
+  const invisibleCards = cardState.filter((card) => card.isVisible === false); // => !invisibleCards
 
   useEffect(() => {
     if (clickedImagePaths.length === 2) {
@@ -39,7 +42,6 @@ function TilesContainer({ isGameStarted }) {
         }
       }, 200);
     }
-    // clickedImagePaths.length === 2 -> akcja sprawdzająca czy clickedImagePaths[0] === clickedImagePaths[1] =>
   }, [clickedImagePaths]);
 
   useEffect(() => {
@@ -57,6 +59,10 @@ function TilesContainer({ isGameStarted }) {
     }
   }, [isGameStarted]);
 
+  if (invisibleCards.length === 0 && !areTilesShowing) {
+    setIsRunning(false);
+    return <div>you won</div>;
+  }
   return (
     <div className="TileContainer">
       {cardState.map(
@@ -64,6 +70,7 @@ function TilesContainer({ isGameStarted }) {
           element // {path: 'url', isVisible: false}
         ) => (
           <Tile
+            key={element.ID}
             isGameStarted={isGameStarted}
             clickedImagePaths={clickedImagePaths}
             cardState={cardState}
