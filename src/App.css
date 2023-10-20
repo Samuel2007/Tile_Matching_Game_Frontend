@@ -3,9 +3,6 @@
   display: flex;
   align-items: center;
 }
-.ContainerCountDown {
-  margin-left: 30px;
-}
 .TextCountDown {
   font-weight: bold;
   font-size: 25px;

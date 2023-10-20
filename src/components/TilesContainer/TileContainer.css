@@ -5,6 +5,7 @@
   margin-top: 20px;
   margin-left: 20px;
   margin-right: 20px;
-  width: 420px;
+  min-width: 420px;
+  max-width: 420px;
   height: 315px;
 }

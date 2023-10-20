@@ -1,0 +1,31 @@
+.Leaderboard {
+  min-width: 420px;
+  max-width: 420px;
+  max-height: 150px;
+  height: 400px;
+  overflow-y: auto;
+  border-bottom: 1px black solid;
+}
+.LeaderboardRow {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-top: 1px black solid;
+}
+.LeaderboardCell {
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  margin-right: 10px;
+}
+.LeaderboardPlace {
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+  margin-left: 10px;
+}
+.Error {
+  color: red;
+  font-weight: bold;
+  font-size: 12.5px;
+}

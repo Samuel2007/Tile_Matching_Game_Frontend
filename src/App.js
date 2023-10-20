@@ -3,6 +3,7 @@ import TilesContainer from "./components/TilesContainer/TileContainer";
 import StartGameButton from "./components/StartGameButton/StartGameButton";
 import { useEffect, useState } from "react";
 import StopWatch from "./components/StopWatch/StopWatch";
+import UserName from "./components/UserName/UserName";
 
 export const TIME_TO_GAME_START = 3000;
 
@@ -12,6 +13,8 @@ function App() {
   const [areTilesShowing, setAreTilesShowing] = useState(false);
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
+  const [userName, setUserName] = useState("");
+  const [isGameEnded, setIsGameEnded] = useState(false);
 
   function timeToChangeText(additionalTime, text) {
     setTimeout(() => {
@@ -36,23 +39,33 @@ function App() {
   return (
     <div className="App">
       <TilesContainer
+        isGameEnded={isGameEnded}
+        setIsGameEnded={setIsGameEnded}
         areTilesShowing={areTilesShowing}
         isGameStarted={isGameStarted}
         setIsGameStarted={setIsGameStarted}
         setIsRunning={setIsRunning}
+        userName={userName}
+        time={time}
       />
       <div>
         {!areTilesShowing ? (
           <StopWatch time={time} setTime={setTime} isRunning={isRunning} />
         ) : null}
+        <UserName
+          userName={userName}
+          setUserName={setUserName}
+          isGameStarted={isGameStarted}
+        />
         {isGameStarted ? (
-          <div className="ContainerCountDown">
+          <div>
             <p className="TextCountDown">{counterText}</p>
           </div>
         ) : (
           <StartGameButton
             isGameStarted={isGameStarted}
             setIsGameStarted={setIsGameStarted}
+            userName={userName}
           />
         )}
       </div>
