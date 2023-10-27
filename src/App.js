@@ -57,13 +57,14 @@ function App() {
           setUserName={setUserName}
           isGameStarted={isGameStarted}
         />
-        {isGameStarted ? (
+        {isGameStarted && !isGameEnded ? (
           <div>
             <p className="TextCountDown">{counterText}</p>
           </div>
         ) : (
           <StartGameButton
             isGameStarted={isGameStarted}
+            isGameEnded={isGameEnded}
             setIsGameStarted={setIsGameStarted}
             userName={userName}
           />

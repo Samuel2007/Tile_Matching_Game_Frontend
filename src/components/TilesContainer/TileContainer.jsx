@@ -23,6 +23,7 @@ const cards = listToDisplay.map((element, index) => {
 
 function TilesContainer({
   isGameStarted,
+  setIsGameStarted,
   isGameEnded,
   setIsGameEnded,
   areTilesShowing,
@@ -83,6 +84,7 @@ function TilesContainer({
           axios.get("http://localhost:3000/API/getAll").then((data) => {
             setLeaderboardData(data.data);
             setIsGameEnded(true);
+            setIsGameStarted(false);
           });
         })
         .catch(() => {});
