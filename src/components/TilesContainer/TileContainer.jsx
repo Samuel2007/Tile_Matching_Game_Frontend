@@ -6,20 +6,23 @@ import axios from "axios";
 import { formatTimeToString } from "../StopWatch/StopWatch";
 import Leaderboard from "../Leaderboard/Leaderboard";
 
-const listOfAllTiles = [
-  "https://images.pexels.com/photos/1374884/pexels-photo-1374884.jpeg?auto=compress&cs=tinysrgb&w=1600",
-  // "https://images.pexels.com/photos/314726/pexels-photo-314726.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  // "https://images.pexels.com/photos/4420454/pexels-photo-4420454.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
-  // "https://images.pexels.com/photos/53459/lightning-storm-weather-sky-53459.jpeg?auto=compress&cs=tinysrgb&w=1600",
-  // "https://images.pexels.com/photos/2129796/pexels-photo-2129796.png?auto=compress&cs=tinysrgb&w=1600",
-  // "https://images.pexels.com/photos/147411/italy-mountains-dawn-daybreak-147411.jpeg?auto=compress&cs=tinysrgb&w=1600",
-];
-const listOfAllPairedTiles = [...listOfAllTiles, ...listOfAllTiles];
-const listToDisplay = listOfAllPairedTiles.sort((a, b) => 0.5 - Math.random());
+const getListOfTiles = (numberOfTiles) => {
+  let listOfAllTiles = [];
+  for (let index = 0; index < numberOfTiles; index++) {
+    listOfAllTiles.push(
+      `https://source.unsplash.com/random/300x200?sig=${Math.random()}`
+    );
+  }
 
-const cards = listToDisplay.map((element, index) => {
-  return { path: element, isVisible: false, ID: index }; // [{isVisible: false}, {isVisible: false}]
-});
+  const listOfAllPairedTiles = [...listOfAllTiles, ...listOfAllTiles];
+  const listToDisplay = listOfAllPairedTiles.sort(() => 0.5 - Math.random());
+
+  const cards = listToDisplay.map((element, index) => {
+    return { path: element, isVisible: false, ID: index };
+  });
+
+  return cards;
+};
 
 function TilesContainer({
   isGameStarted,
@@ -30,10 +33,28 @@ function TilesContainer({
   setIsRunning,
   userName,
   time,
+  gameDifficulty,
 }) {
   const [clickedImagePaths, setImagePaths] = useState([]);
-  const [cardState, setCardsState] = useState(cards);
+  const [cardState, setCardsState] = useState(getListOfTiles(6));
   const [leaderboardData, setLeaderboardData] = useState([]);
+
+  useEffect(() => {
+    switch (gameDifficulty) {
+      case "Easy":
+        setCardsState(getListOfTiles(6));
+        break;
+      case "Medium":
+        setCardsState(getListOfTiles(10));
+        break;
+      case "Hard":
+        setCardsState(getListOfTiles(14));
+        break;
+      default:
+        setCardsState(getListOfTiles(6));
+        break;
+    }
+  }, [gameDifficulty]);
 
   cardState.map((card) => ({ ...card, isVisible: false }));
   const invisibleCards = cardState.filter((card) => card.isVisible === false);

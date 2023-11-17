@@ -15,6 +15,7 @@ function App() {
   const [isRunning, setIsRunning] = useState(false);
   const [userName, setUserName] = useState("");
   const [isGameEnded, setIsGameEnded] = useState(false);
+  const [gameDifficulty, setGameDifficulty] = useState("Easy");
 
   function timeToChangeText(additionalTime, text) {
     setTimeout(() => {
@@ -36,6 +37,10 @@ function App() {
     }
   }, [isGameStarted]);
 
+  const changeDifficulty = (event) => {
+    setGameDifficulty(event.target.value);
+  };
+
   return (
     <div className="App">
       <TilesContainer
@@ -47,11 +52,18 @@ function App() {
         setIsRunning={setIsRunning}
         userName={userName}
         time={time}
+        gameDifficulty={gameDifficulty}
       />
+
       <div>
         {!areTilesShowing ? (
           <StopWatch time={time} setTime={setTime} isRunning={isRunning} />
         ) : null}
+        <select name="difficulty" id="difficulty" onChange={changeDifficulty}>
+          <option value="Easy">Easy</option>
+          <option value="Medium">Medium</option>
+          <option value="Hard">Hard</option>
+        </select>
         <UserName
           userName={userName}
           setUserName={setUserName}

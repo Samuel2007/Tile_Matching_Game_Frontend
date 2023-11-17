@@ -39,7 +39,8 @@ function Tile({
   };
   return (
     <div className="Tile" onClick={onClickHandler}>
-      {isVisible && <img src={pictureTile} className="Image" />}
+      <img src={pictureTile} alt="not found" className="Image" />
+      {!isVisible && <div className="Cover" />}
     </div>
   );
 }
