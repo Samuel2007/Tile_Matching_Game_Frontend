@@ -48,7 +48,7 @@ function TilesContainer({
         setCardsState(getListOfTiles(10));
         break;
       case "Hard":
-        setCardsState(getListOfTiles(14));
+        setCardsState(getListOfTiles(1));
         break;
       default:
         setCardsState(getListOfTiles(6));
@@ -100,17 +100,28 @@ function TilesContainer({
         .post("http://localhost:3000/API/post", {
           name: userName,
           time: formatTimeToString(time),
+          level: gameDifficulty,
         })
+
         .then(() => {
-          axios.get("http://localhost:3000/API/getAll").then((data) => {
-            setLeaderboardData(data.data);
-            setIsGameEnded(true);
-            setIsGameStarted(false);
-          });
+          axios
+            .get(`http://localhost:3000/API/getAll/${gameDifficulty}`)
+            .then((data) => {
+              setLeaderboardData(data.data);
+              setIsGameEnded(true);
+              setIsGameStarted(false);
+            });
         })
         .catch(() => {});
     }
-  }, [areTilesShowing, invisibleCards.length, setIsRunning, userName, time]);
+  }, [
+    areTilesShowing,
+    invisibleCards.length,
+    setIsRunning,
+    userName,
+    time,
+    gameDifficulty,
+  ]);
 
   if (isGameEnded) {
     return (
