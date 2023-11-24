@@ -48,7 +48,7 @@ function TilesContainer({
         setCardsState(getListOfTiles(10));
         break;
       case "Hard":
-        setCardsState(getListOfTiles(1));
+        setCardsState(getListOfTiles(14));
         break;
       default:
         setCardsState(getListOfTiles(6));
