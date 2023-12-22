@@ -4,6 +4,8 @@ import StartGameButton from "./components/StartGameButton/StartGameButton";
 import { useEffect, useState } from "react";
 import StopWatch from "./components/StopWatch/StopWatch";
 import UserName from "./components/UserName/UserName";
+import PickDifficulty from "./components/PickDifficulty/PickDifficulty";
+import CustomDifficulty from "./components/CustomDifficulty/CustomDifficulty";
 
 export const TIME_TO_GAME_START = 3000;
 
@@ -16,6 +18,7 @@ function App() {
   const [userName, setUserName] = useState("");
   const [isGameEnded, setIsGameEnded] = useState(false);
   const [gameDifficulty, setGameDifficulty] = useState("Easy");
+  const [customDifficulty, setCustomDifficulty] = useState(6);
 
   function timeToChangeText(additionalTime, text) {
     setTimeout(() => {
@@ -39,6 +42,8 @@ function App() {
 
   const changeDifficulty = (event) => {
     setGameDifficulty(event.target.value);
+
+    //event.target.value = "Custom" -> display input(default value = 10)
   };
 
   return (
@@ -53,17 +58,21 @@ function App() {
         userName={userName}
         time={time}
         gameDifficulty={gameDifficulty}
+        customDifficulty={customDifficulty}
       />
 
-      <div>
+      <div className="Interface">
         {!areTilesShowing ? (
           <StopWatch time={time} setTime={setTime} isRunning={isRunning} />
         ) : null}
-        <select name="difficulty" id="difficulty" onChange={changeDifficulty}>
-          <option value="Easy">Easy</option>
-          <option value="Medium">Medium</option>
-          <option value="Hard">Hard</option>
-        </select>
+        <PickDifficulty changeDifficulty={changeDifficulty} />
+        {gameDifficulty === "Custom" ? (
+          <CustomDifficulty
+            setCustomDifficulty={setCustomDifficulty}
+            customDifficulty={customDifficulty}
+          />
+        ) : null}
+
         <UserName
           userName={userName}
           setUserName={setUserName}

@@ -34,6 +34,7 @@ function TilesContainer({
   userName,
   time,
   gameDifficulty,
+  customDifficulty,
 }) {
   const [clickedImagePaths, setImagePaths] = useState([]);
   const [cardState, setCardsState] = useState(getListOfTiles(6));
@@ -50,11 +51,14 @@ function TilesContainer({
       case "Hard":
         setCardsState(getListOfTiles(14));
         break;
+      case "Custom":
+        setCardsState(getListOfTiles(customDifficulty * 2));
+        break;
       default:
         setCardsState(getListOfTiles(6));
         break;
     }
-  }, [gameDifficulty]);
+  }, [customDifficulty, gameDifficulty]);
 
   cardState.map((card) => ({ ...card, isVisible: false }));
   const invisibleCards = cardState.filter((card) => card.isVisible === false);
@@ -95,17 +99,21 @@ function TilesContainer({
 
   useEffect(() => {
     if (invisibleCards.length === 0 && !areTilesShowing) {
+      console.log(gameDifficulty);
       setIsRunning(false);
       axios
-        .post("http://localhost:3000/API/post", {
+        .post("http://localhost:3001/API/post", {
           name: userName,
           time: formatTimeToString(time),
           level: gameDifficulty,
+          customDifficulty,
         })
 
         .then(() => {
           axios
-            .get(`http://localhost:3000/API/getAll/${gameDifficulty}`)
+            .get(
+              `http://localhost:3001/API/getAll/${gameDifficulty}/${customDifficulty}`
+            )
             .then((data) => {
               setLeaderboardData(data.data);
               setIsGameEnded(true);
